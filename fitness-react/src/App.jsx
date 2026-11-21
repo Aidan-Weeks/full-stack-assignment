@@ -19,12 +19,16 @@ function App() {
         setWorkouts(workouts.map((workout) => (workout.id === update.id ? update : workout)));
     }
 
+    const deleteWorkout = (id) => {
+      setWorkouts(workouts.filter((workout) => workout.id !== id));
+    }
+
   return (
     <div className="App">
       <h1>Fitness Tracker</h1>
       <WorkoutForm onSubmit={addWorkout} />
         {workouts.map((w) => (
-        <Workout key={w.id} workout={w} onUpdate={updateWorkout } />
+        <Workout key={w.id} workout={w} onUpdate={updateWorkout } onDelete={deleteWorkout}  />
       ))}
     </div>
   ); 
