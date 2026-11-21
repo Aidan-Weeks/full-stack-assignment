@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import Workout from './components/workout';
-import AddWorkoutForm from './components/addWorkoutForm';
+import WorkoutForm from './components/WorkoutForm';
 
 const sampleWorkouts = [
   { id: 1, date: '2026-11-17', exercise: 'Bench press', weight: 100, sets: 1, reps: 1 },
@@ -15,12 +15,16 @@ function App() {
     setWorkouts([{ ...workout, id: Date.now() }, ...workouts]);
   };
 
+    const updateWorkout = (update) => {
+        setWorkouts(workouts.map((workout) => (workout.id === update.id ? update : workout)));
+    }
+
   return (
     <div className="App">
       <h1>Fitness Tracker</h1>
-      <AddWorkoutForm onAdd={addWorkout} />
-      {workouts.map((w) => (
-        <Workout key={w.id} workout={w} />
+      <WorkoutForm onSubmit={addWorkout} />
+        {workouts.map((w) => (
+        <Workout key={w.id} workout={w} onUpdate={updateWorkout } />
       ))}
     </div>
   ); 
