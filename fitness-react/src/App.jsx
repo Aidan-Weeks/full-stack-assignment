@@ -1,18 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getWorkouts } from './api/workouts-api';
 import Workout from './components/workout';
 import WorkoutForm from './components/WorkoutForm';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 
-const sampleWorkouts = [
-  { id: 1, date: '2026-11-17', exercise: 'Bench press', weight: 100, sets: 1, reps: 1 },
-  { id: 2, date: '2026-11-13', exercise: 'Paused bench', weight: 80, sets: 3, reps: 4 },
-  { id: 3, date: '2026-11-10', exercise: 'Incline bench', weight: 65, sets: 4, reps: 8 },
-];
 function App() {
-    const [workouts, setWorkouts] = useState(sampleWorkouts);
+    const [workouts, setWorkouts] = useState([]);
+  const [error, setError] = useState('');
 
+  useEffect(() => {
+    getWorkouts()
+      .then((list) => setWorkouts(list))
+      .catch((err) => setError(err.message));
+  }, []);
+  
     const addWorkout = (workout) => {
     setWorkouts([{ ...workout, id: Date.now() }, ...workouts]);
   };
