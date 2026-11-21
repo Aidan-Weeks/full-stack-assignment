@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const empty = { date: '', exercise: 'Bench press', weight: '', sets: '', reps: '' };
 
@@ -15,15 +18,26 @@ function WorkoutForm({initialValues = empty, onSubmit, submitLabel = 'Add workou
   };
   
      return (
-    <form onSubmit={handleSubmit}>
-      <input type="date" name="date" value={form.date} onChange={handleChange} />
-      <input name="exercise" value={form.exercise} onChange={handleChange} />
-      <input type="number" name="weight" placeholder="kg" value={form.weight} onChange={handleChange} />
-      <input type="number" name="sets" placeholder="Sets" value={form.sets} onChange={handleChange} />
-      <input type="number" name="reps" placeholder="Reps" value={form.reps} onChange={handleChange} />
-      <button type="submit">{submitLabel}</button>
+      <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center' }}
+    >  
+      <TextField type="date" name="date" label="Date" value={form.date} onChange={handleChange}
+        size="small"
+        slotProps={{ inputLabel: { shrink: true } }}/>
+      <TextField name="exercise" value={form.exercise} onChange={handleChange}
+       size="small" />
+      <TextField type="number" name="weight" placeholder="kg" value={form.weight} onChange={handleChange}
+       size="small" sx={{ width: 120 }} />
+      <TextField type="number" name="sets" placeholder="Sets" value={form.sets} onChange={handleChange}
+       size="small" sx={{ width: 90 }} />
+      <TextField type="number" name="reps" placeholder="Reps" value={form.reps} onChange={handleChange}
+       size="small"  sx={{ width: 90 }}/>
+      <Button type="submit" variant="contained">{submitLabel}</Button>
+      {onCancel && <Button onClick={onCancel}>Cancel</Button>}
       {onCancel && <button type="button" onClick={onCancel}>Cancel</button>}
-    </form>
+      </Box>
   );
 }
 

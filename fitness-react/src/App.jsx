@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import './App.css';
 import Workout from './components/workout';
 import WorkoutForm from './components/WorkoutForm';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 
 const sampleWorkouts = [
   { id: 1, date: '2026-11-17', exercise: 'Bench press', weight: 100, sets: 1, reps: 1 },
@@ -24,14 +26,20 @@ function App() {
     }
 
   return (
-    <div className="App">
-      <h1>Fitness Tracker</h1>
-      <WorkoutForm onSubmit={addWorkout} />
-        {workouts.map((w) => (
-        <Workout key={w.id} workout={w} onUpdate={updateWorkout } onDelete={deleteWorkout}  />
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Typography variant="h3" component="h1" sx={{ mb: 3, fontWeight: 700 }}>
+        Fitness Tracker
+      </Typography>
+
+      <Paper sx={{ p: 2, mb: 3 }}>
+        <WorkoutForm onSubmit={addWorkout} />
+      </Paper>
+
+      {workouts.map((w) => (
+        <Workout key={w.id} workout={w} onUpdate={updateWorkout} onDelete={deleteWorkout} />
       ))}
-    </div>
-  ); 
+    </Container>
+  );
 }
 
 export default App;
