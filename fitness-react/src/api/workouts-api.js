@@ -6,3 +6,15 @@ export const getWorkouts = async () => {
   const data = await response.json();
   return data.workouts;    
 };
+
+export const addWorkout = async (workout) => {
+  const response = await fetch('/api/workouts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(workout),
+  });
+  if (!response.ok) {
+    throw new Error(`Could not add workout (${response.status})`);
+  }
+  return response.json();   
+};

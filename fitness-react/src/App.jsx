@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getWorkouts } from './api/workouts-api';
+import { getWorkouts, addWorkout as addWorkoutApi} from './api/workouts-api';
 import Workout from './components/workout';
 import WorkoutForm from './components/WorkoutForm';
 import Container from '@mui/material/Container';
@@ -15,9 +15,11 @@ function App() {
       .then((list) => setWorkouts(list))
       .catch((err) => setError(err.message));
   }, []);
-  
-    const addWorkout = (workout) => {
-    setWorkouts([{ ...workout, id: Date.now() }, ...workouts]);
+
+     const addWorkout = (workout) => {
+    addWorkoutApi(workout)
+      .then((saved) => setWorkouts([...workouts, saved]))
+      .catch((err) => setError(err.message));
   };
 
     const updateWorkout = (update) => {
