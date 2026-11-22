@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getWorkouts, addWorkout as addWorkoutApi} from './api/workouts-api';
+import { getWorkouts, addWorkout as addWorkoutApi, deleteWorkout as deleteWorkoutApi} from './api/workouts-api';
 import Workout from './components/workout';
 import WorkoutForm from './components/WorkoutForm';
 import Container from '@mui/material/Container';
@@ -26,9 +26,11 @@ function App() {
         setWorkouts(workouts.map((workout) => (workout.id === update.id ? update : workout)));
     }
 
-    const deleteWorkout = (id) => {
-      setWorkouts(workouts.filter((workout) => workout.id !== id));
-    }
+   const deleteWorkout = (id) => {
+    deleteWorkoutApi(id)
+      .then(() => setWorkouts(workouts.filter((workout) => workout.id !== id)))
+      .catch((err) => setError(err.message));
+  };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>

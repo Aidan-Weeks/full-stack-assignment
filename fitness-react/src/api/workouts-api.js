@@ -18,3 +18,10 @@ export const addWorkout = async (workout) => {
   }
   return response.json();   
 };
+
+export const deleteWorkout = async (id) => {
+  const response = await fetch(`/api/workouts/${id}`, { method: 'DELETE' });
+  if (!response.ok) {
+    throw new Error(`Could not delete workout (${response.status})`);
+  }
+};

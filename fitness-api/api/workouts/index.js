@@ -33,4 +33,15 @@ router.post('/', (req, res) => {
     workoutsData.total_results++;
 });
 
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    const workoutIndex = workoutsData.workouts.findIndex(workout => workout.id === id);
+    if (workoutIndex === -1) {
+        return res.status(404).json({ status: 404, message: 'Workout not found' });
+    }
+    workoutsData.workouts.splice(workoutIndex, 1);
+    res.status(204).send();
+    workoutsData.total_results--;
+});
+
 export default router;
